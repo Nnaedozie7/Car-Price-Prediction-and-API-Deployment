@@ -130,6 +130,45 @@ This project is intended for educational and portfolio purposes.
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 Developed as part of a machine learning portfolio to demonstrate regression modeling, preprocessing pipelines, feature engineering, and evaluation on structured automotive data.
+
+
+#  Car Price Prediction API
+
+Production-ready FastAPI inference service for a Linear Regression car price prediction model.
+
+This repository contains only the deployment layer of the project.  
+Model development, experimentation, and training are maintained in a separate repository.
+
+---
+
+##  Overview
+
+This API:
+
+- Loads trained preprocessing and model artifacts
+- Applies feature engineering during inference
+- Exposes a REST endpoint for predictions
+- Is containerized using Docker
+- Is deployable to Google Cloud Run
+
+---
+
+##  Model Architecture
+
+The inference pipeline consists of:
+
+1. Brand-based feature engineering  
+2. Categorical + numerical preprocessing (ColumnTransformer)  
+3. Linear Regression model  
+
+
+---
+
+##  Run Locally
+
+### Install Dependencies
+
+pip install -r requirements.txt
