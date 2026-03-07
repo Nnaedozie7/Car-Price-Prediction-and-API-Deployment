@@ -37,7 +37,7 @@ def add_brand_category(df: pd.DataFrame, brand_mean_map: dict, global_mean: floa
     df["brand_avg_price"] = df["brand"].map(brand_mean_map).fillna(global_mean)
     df["brand_category"] = df["brand_avg_price"].apply(brand_category_from_mean)
 
-    # drop like notebook
+    
     for col in ["car_ID", "symboling", "CarName", "brand", "brand_avg_price"]:
         if col in df.columns:
             df = df.drop(columns=[col])
@@ -52,13 +52,13 @@ def main():
     y = data["price"].copy()
     X_raw = data.drop(columns=["price"])
 
-    # learn brand mean prices from TRAIN ONLY (still leakage-ish, but matches your logic)
+    
     X_tmp = X_raw.copy()
     X_tmp["brand"] = X_tmp["CarName"].apply(extract_brand)
     brand_mean = pd.DataFrame({"brand": X_tmp["brand"], "price": y}).groupby("brand")["price"].mean().to_dict()
     global_mean = float(np.mean(list(brand_mean.values())))
 
-    # create engineered dataset
+    
     X = add_brand_category(X_raw, brand_mean, global_mean)
 
     categorical_features = [
@@ -88,7 +88,7 @@ def main():
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
 
-    # fit preprocesser on train, then model
+    
     X_train_t = preprocessor.fit_transform(X_train)
     X_test_t = preprocessor.transform(X_test)
 
@@ -101,7 +101,7 @@ def main():
     print(f"RMSE: {rmse:.2f}")
     print(f"R2:   {r2:.4f}")
 
-    # Save artifacts (NO custom class in joblib)
+    
     joblib.dump(preprocessor, "preprocessor.joblib")
     joblib.dump(model, "linear_model.joblib")
 
